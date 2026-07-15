@@ -1,0 +1,7 @@
+{
+    "appId": "chat.matron.desktop",
+    "name": "matron-desktop",
+    "productName": "Matron",
+    "description": "Matron: a desktop client for chatting with agents",
+    "protocols": ["chat.matron.desktop"]
+}

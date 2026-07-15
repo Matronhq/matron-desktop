@@ -1,0 +1,78 @@
+{
+    "name": "matron-desktop",
+    "productName": "Matron",
+    "main": "lib/electron-main.js",
+    "exports": "./lib/electron-main.js",
+    "version": "1.12.10",
+    "description": "A desktop client for chatting with agents",
+    "author": {
+        "name": "Matron",
+        "email": "support@matron.chat"
+    },
+    "homepage": "https://matron.chat",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Matronhq/matron-desktop"
+    },
+    "license": "AGPL-3.0-only OR GPL-3.0-only",
+    "type": "module",
+    "files": [],
+    "engines": {
+        "node": ">=22.18"
+    },
+    "scripts": {
+        "fetch": "tsx scripts/fetch-package.ts",
+        "asar-webapp": "asar p webapp webapp.asar",
+        "start": "pnpm build:ts && electron .",
+        "start:hot": "tsx scripts/start-hot.ts",
+        "lint": "pnpm lint:types && prettier --check src scripts playwright electron-builder.ts playwright.config.ts",
+        "lint:fix": "prettier --write src scripts playwright electron-builder.ts playwright.config.ts",
+        "lint:types": "pnpm lint:types:src && pnpm lint:types:test && pnpm lint:types:scripts",
+        "lint:types:src": "tsc --noEmit",
+        "lint:types:test": "tsc --noEmit -p playwright/tsconfig.json",
+        "lint:types:scripts": "tsc --noEmit -p scripts/tsconfig.json",
+        "build:32": "pnpm build:ts && electron-builder --ia32",
+        "build:64": "pnpm build:ts && electron-builder --x64",
+        "build:universal": "pnpm build:ts && electron-builder --universal",
+        "build": "pnpm build:ts && electron-builder",
+        "build:ts": "rimraf lib && tsc",
+        "clean": "rimraf webapp.asar dist packages deploys lib",
+        "test": "playwright test",
+        "test:open": "pnpm test --ui"
+    },
+    "dependencies": {
+        "electron-store": "^11.0.0",
+        "electron-window-state": "^5.0.3",
+        "minimist": "^1.2.6",
+        "png-to-ico": "^3.0.0",
+        "uuid": "^13.0.0"
+    },
+    "devDependencies": {
+        "@electron/asar": "4.0.1",
+        "@playwright/test": "1.58.2",
+        "@types/minimist": "^1.2.1",
+        "@types/node": "22.19.11",
+        "app-builder-lib": "26.7.0",
+        "electron": "40.4.1",
+        "electron-builder": "26.7.0",
+        "electron-builder-squirrel-windows": "26.7.0",
+        "electron-devtools-installer": "^4.0.0",
+        "prettier": "^3.8.0",
+        "rimraf": "^6.0.0",
+        "tar": "^7.5.20",
+        "tsx": "^4.19.2",
+        "typescript": "5.9.3"
+    },
+    "resolutions": {
+        "atomically": "2.1.1",
+        "config-file-ts": "0.2.8-rc1",
+        "node-abi": "4.26.0"
+    },
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "electron"
+        ]
+    },
+    "packageManager": "pnpm@10.29.3+sha512.498e1fb4cca5aa06c1dcf2611e6fafc50972ffe7189998c409e90de74566444298ffe43e6cd2acdc775ba1aa7cc5e092a8b7054c811ba8c5770f84693d33d2dc",
+    "private": true
+}

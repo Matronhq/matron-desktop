@@ -1,0 +1,9 @@
+/build/
+/dist/
+/lib/
+/node_modules/
+/packages/
+/playwright/html-report/
+/playwright/test-results/
+/pnpm-lock.yaml
+/webapp/

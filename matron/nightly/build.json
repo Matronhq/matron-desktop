@@ -1,0 +1,9 @@
+{
+    "appId": "chat.matron.desktop.nightly",
+    "name": "matron-desktop-nightly",
+    "productName": "Matron Nightly",
+    "description": "Matron: a desktop client for chatting with agents (nightly unstable build)",
+    "protocols": ["chat.matron.desktop.nightly"],
+    "linux.executableName": "matron-desktop-nightly",
+    "linux.deb.name": "matron-nightly"
+}
