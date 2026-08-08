@@ -36,10 +36,13 @@ npx asar list webapp.asar | grep -q '^/config.json' \
 # defaults (checking the file merely exists is not enough — an old asar can
 # keep prior default_server_*/scalar/room-directory settings in a signed build).
 # NB: `asar extract-file` writes into the current directory and prints nothing
-# to stdout, so read the file via the asar API rather than redirecting the CLI.
+# to stdout, so read the file via the local asar API; on a clean tree (deps are
+# only installed after preflight) fall back to running the CLI inside the temp
+# dir so the extracted file still lands there.
 _asar_tmp="$(mktemp -d)"
 if node -e 'process.stdout.write(require("@electron/asar").extractFile("webapp.asar", "config.json"))' \
-    > "$_asar_tmp/config.json" 2>/dev/null; then
+    > "$_asar_tmp/config.json" 2>/dev/null \
+    || (cd "$_asar_tmp" && npx --yes @electron/asar extract-file "$OLDPWD/webapp.asar" config.json > /dev/null 2>&1); then
   if grep -qE "default_server|matrix-client\.matrix\.org|scalar|vector\.im|gitter" "$_asar_tmp/config.json"; then
     echo "ERROR: webapp.asar config.json still contains matrix.org/Element defaults — repack it (pnpm run asar-webapp) before releasing"; fail=1
   fi
