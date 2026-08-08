@@ -142,7 +142,6 @@ async function main(): Promise<void> {
 
     console.log("Building desktop main process...");
     await runCommand(pnpmCommand, ["run", "build:ts"], desktopRoot);
-    await runCommand(pnpmCommand, ["run", "build:res"], desktopRoot);
 
     let webProcess: ChildProcess | undefined;
     if (await isServerReady(options.webUrl)) {
