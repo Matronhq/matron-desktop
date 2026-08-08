@@ -168,6 +168,11 @@ const config: Omit<Writable<Configuration>, "electronFuses"> & {
     directories: {
         output: "dist",
     },
+    publish: {
+        provider: "github",
+        owner: "Matronhq",
+        repo: "matron-desktop",
+    },
     protocols: {
         name: variant.productName,
         schemes: variant.protocols,
@@ -201,7 +206,7 @@ if (process.env.ED_SIGNTOOL_SUBJECT_NAME && process.env.ED_SIGNTOOL_THUMBPRINT) 
 
 if (os.platform() === "linux") {
     // Electron crashes on debian if there's a space in the path.
-    // https://github.com/matronhq/matron-web/issues/13171
+    // https://github.com/element-hq/element-web/issues/13171
     config.extraMetadata.productName = config.extraMetadata.productName.replace(/ /g, "-");
 
     /**
