@@ -8,12 +8,12 @@ you will need debug symbols.
    you are analyzing someone else's coredump), download and unpack the tarball
    from https://packages.matron.chat/desktop/install/linux/. If it was a
    nightly, your best bet may be to download the deb from
-   https://packages.matron.chat/debian/pool/main/e/matron-nightly/ and unpack
+   https://packages.matron.chat/debian/pool/main/m/matron-nightly/ and unpack
    it.
 2. Figure out which version of Electron your Matron-Desktop is based on. The
    best way to do this is to figure out the version of Matron-Desktop, then
    look at
-   [`package.json`](https://github.com/matronhq/matron-desktop/blob/develop/package.json)
+   [`package.json`](https://github.com/matronhq/matron-desktop/blob/main/package.json)
    for the corresponding version. There will be an entry within `dependencies` of
    `electron`: the value will tell you the version of Electron that was used for that version of Matron-Desktop.
 
