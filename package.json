@@ -53,7 +53,7 @@
         "@types/minimist": "^1.2.1",
         "@types/node": "22.19.11",
         "app-builder-lib": "26.7.0",
-        "electron": "40.4.1",
+        "electron": "41.10.3",
         "electron-builder": "26.7.0",
         "electron-builder-squirrel-windows": "26.7.0",
         "electron-devtools-installer": "^4.0.0",
