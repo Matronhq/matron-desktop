@@ -26,5 +26,8 @@ Internal design notes and plans belong in the private notes repository, not
 in `docs/` here. Write pull request descriptions for an outside reader: what
 changes and why, in product terms.
 
-The `leak-check` workflow fails a change that adds such detail. It reports
-only a rule number and a location; fix the named places and push again.
+The `leak-check` workflow fails a change whose added lines, file names,
+commit messages, title or description match one of its private patterns.
+It reports only a rule number and a location; fix the named places and push
+again. It cannot read images or videos: a new one only gets a warning, so
+check every screenshot by eye before adding it.
