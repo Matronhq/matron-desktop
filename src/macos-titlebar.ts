@@ -7,7 +7,11 @@ Please see LICENSE files in the repository root for full details.
 
 import type { BrowserWindow } from "electron";
 
+// Matron Web class names; matron-web pins them in test/unit-tests/journal/desktop-hooks-test.ts.
+// The sidebar header is listed under its current and its earlier name, so a Desktop build works
+// with web builds from either side of that rename.
 const TITLE_BAR_CSS = `
+    .mj_ConversationListHeader,
     .mj_RoomListHeader,
     .mj_ChatHeader,
     .mj_Login {
@@ -15,6 +19,7 @@ const TITLE_BAR_CSS = `
         -webkit-user-select: none;
     }
 
+    .mj_ConversationListHeader > *,
     .mj_RoomListHeader > *,
     .mj_ChatHeader > *,
     .mj_Login .mj_Login_column {
