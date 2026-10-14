@@ -9,15 +9,15 @@ import type { BrowserWindow } from "electron";
 
 const TITLE_BAR_CSS = `
     .mj_RoomListHeader,
-    .mx_RoomHeader,
-    .mx_AuthPage {
+    .mj_ChatHeader,
+    .mj_Login {
         -webkit-app-region: drag;
         -webkit-user-select: none;
     }
 
     .mj_RoomListHeader > *,
-    .mx_RoomHeader > *,
-    .mx_AuthPage .mx_AuthPage_modalContent {
+    .mj_ChatHeader > *,
+    .mj_Login .mj_Login_column {
         -webkit-app-region: no-drag;
     }
 `;
