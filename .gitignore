@@ -16,3 +16,6 @@ yarn-error.log
 .DS_Store
 /playwright-report
 .pnpm-store
+
+# Agent scratch (PR bodies, screenshots): never committed
+.superpowers/
