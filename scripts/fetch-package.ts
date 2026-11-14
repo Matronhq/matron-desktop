@@ -10,9 +10,7 @@ import { promises as stream } from "node:stream";
 import matronDesktopPackageJson from "../package.json";
 import { setPackageVersion } from "./set-version.js";
 
-const PUB_KEY_URL = "https://packages.matron.chat/matron-release-key.asc";
 const PACKAGE_URL_PREFIX = "https://github.com/matronhq/matron-web/releases/download/";
-const DEVELOP_TGZ_URL = "https://develop.matron.chat/develop.tar.gz";
 const ASAR_PATH = "webapp.asar";
 
 async function downloadToFile(url: string, filename: string): Promise<void> {
@@ -46,7 +44,6 @@ async function verifyFile(filename: string): Promise<void> {
 
 async function main(): Promise<number | undefined> {
     let verify = true;
-    let importkey = false;
     let pkgDir = "packages";
     let deployDir = "deploys";
     // Default to the release variant config so the asar always ships with Matron's journal settings.
@@ -61,9 +58,6 @@ async function main(): Promise<number | undefined> {
         switch (process.argv[2]) {
             case "--noverify":
                 verify = false;
-                break;
-            case "--importkey":
-                importkey = true;
                 break;
             case "--packages":
                 process.argv.shift();
@@ -88,15 +82,11 @@ async function main(): Promise<number | undefined> {
 
     if (targetVersion === undefined) {
         targetVersion = "v" + matronDesktopPackageJson.version;
-    } else if (targetVersion !== "develop") {
+    } else {
         setVersion = true; // version was specified
     }
 
-    if (targetVersion === "develop") {
-        filename = "develop.tar.gz";
-        url = DEVELOP_TGZ_URL;
-        verify = false; // develop builds aren't signed
-    } else if (targetVersion.includes("://")) {
+    if (targetVersion.includes("://")) {
         filename = targetVersion.substring(targetVersion.lastIndexOf("/") + 1);
         url = targetVersion;
         verify = false; // manually verified
@@ -110,32 +100,6 @@ async function main(): Promise<number | undefined> {
             resolve(!error);
         });
     });
-
-    if (importkey) {
-        if (!haveGpg) {
-            console.log("Can't import key without working GPG binary: install GPG and try again");
-            return 1;
-        }
-
-        await new Promise<boolean>((resolve, reject) => {
-            const gpgProc = childProcess.execFile("gpg", ["--import"], (error) => {
-                if (error) {
-                    console.log("Failed to import key", error);
-                } else {
-                    console.log("Key imported!");
-                }
-                resolve(!error);
-            });
-            fetch(PUB_KEY_URL)
-                .then((resp) => {
-                    if (!resp.ok) throw new Error(`unexpected response ${resp.statusText}`);
-                    if (!resp.body) throw new Error(`unexpected response has no body ${resp.statusText}`);
-                    stream.pipeline(resp.body, gpgProc.stdin!).catch(reject);
-                })
-                .catch(reject);
-        });
-        return 0;
-    }
 
     if (verify && !haveGpg) {
         console.log("No working GPG binary: install GPG or pass --noverify to skip verification");
@@ -192,7 +156,7 @@ async function main(): Promise<number | undefined> {
             file: outPath,
             cwd: deployDir,
             onentry: (entry) => {
-                // Find the appropriate extraction path, only needed for `develop` where the dir name is unknown
+                // Find the appropriate extraction path, only needed for a URL, where the dir name is unknown
                 if (entry.type === "Directory" && !path.join(deployDir, entry.path).startsWith(expectedDeployDir)) {
                     expectedDeployDir = path.join(deployDir, entry.path);
                 }

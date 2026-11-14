@@ -5,11 +5,9 @@ with [`gdb`](https://sourceware.org/gdb/), or to analayze a coredump. For this,
 you will need debug symbols.
 
 1. If you don't already have the right version of Matron-Desktop (eg because
-   you are analyzing someone else's coredump), download and unpack the tarball
-   from https://packages.matron.chat/desktop/install/linux/. If it was a
-   nightly, your best bet may be to download the deb from
-   https://packages.matron.chat/debian/pool/main/m/matron-nightly/ and unpack
-   it.
+   you are analyzing someone else's coredump), download and unpack the Linux build
+   for that version from the
+   [releases page](https://github.com/matronhq/matron-desktop/releases).
 2. Figure out which version of Electron your Matron-Desktop is based on. The
    best way to do this is to figure out the version of Matron-Desktop, then
    look at
